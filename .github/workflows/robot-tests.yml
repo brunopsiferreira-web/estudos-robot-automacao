@@ -1,0 +1,61 @@
+name: Robot Framework Tests
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout do código
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Configurar Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # 3. Instalar dependências
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # 4. Iniciar o simulador em background
+      - name: Start Flask app (simulator)
+        run: |
+          python app/form_simulator.py &
+          sleep 3  # aguarda inicializar
+        shell: bash
+
+      # 5. Rodar os testes com Robot Framework
+      - name: Run Robot tests
+        run: |
+          robot --outputdir results/ tests/
+
+      # 6. Salvar artefatos (logs, screenshots, relatórios)
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()  # salva mesmo se falhar
+        with:
+          name: robot-test-results
+          path: |
+            results/
+            log.html
+            report.html
+            output.xml
+
+      # 7. (Opcional) Comentar no PR com link do relatório
+      - name: Comment PR with test report
+        if: github.event_name == 'pull_request'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "✅ **Testes do Robot Framework concluídos**" >> $GITHUB_STEP_SUMMARY
+          echo "- [Relatório HTML](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts)" >> $GITHUB_STEP_SUMMARY
