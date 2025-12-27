@@ -1,566 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.4.1 (Python 3.12.3 on linux)" generated="2025-12-27T17:55:01.914750" rpa="false" schemaversion="5">
+<robot generator="Robot 7.4.1 (Python 3.12.3 on linux)" generated="2025-12-27T18:26:38.085418" rpa="false" schemaversion="5">
 <suite id="s1" name="Fill Form From Csv" source="/home/bruno/Documentos/projeto-robot/tests/fill_form_from_csv.robot">
 <test id="s1-t1" name="Cadastrar Candidatos do CSV" line="14">
 <kw name="Open Browser" owner="SeleniumLibrary">
-<msg time="2025-12-27T17:55:02.055989" level="INFO">Opening browser 'chrome' to base url 'http://localhost:5000'.</msg>
+<msg time="2025-12-27T18:26:38.207306" level="WARN">exexcutable_path is being deprecated. Please use service to configure the driver's executable_path as per documentation.</msg>
+<msg time="2025-12-27T18:26:38.207387" level="INFO">Opening browser 'Chrome' to base url 'http://localhost:5000'.</msg>
+<msg time="2025-12-27T18:26:38.207691" level="INFO">Cannot capture screenshot because no browser is open.</msg>
+<msg time="2025-12-27T18:26:38.207765" level="FAIL">NoSuchDriverException: Message: Unable to obtain driver for chrome; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors/driver_location
+</msg>
 <arg>${FORM_URL}</arg>
-<arg>chrome</arg>
+<arg>browser=Chrome</arg>
+<arg>executable_path=/usr/local/bin/chromedriver</arg>
 <doc>Opens a new browser instance to the optional ``url``.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.055774" elapsed="0.512488"/>
+<status status="FAIL" start="2025-12-27T18:26:38.207098" elapsed="0.001624">NoSuchDriverException: Message: Unable to obtain driver for chrome; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors/driver_location
+</status>
 </kw>
 <kw name="Set Selenium Speed" owner="SeleniumLibrary">
 <arg>0.3s</arg>
 <doc>Sets the delay that is waited after each Selenium command.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.568585" elapsed="0.000252"/>
+<status status="NOT RUN" start="2025-12-27T18:26:38.208862" elapsed="0.000025"/>
 </kw>
 <kw name="Ler Candidatos do CSV" owner="csv_reader">
-<kw name="Get File" owner="OperatingSystem">
-<msg time="2025-12-27T17:55:02.570277" level="INFO" html="true">Getting file '&lt;a href="file:///home/bruno/Documentos/projeto-robot/dados/candidatos.csv"&gt;/home/bruno/Documentos/projeto-robot/dados/candidatos.csv&lt;/a&gt;'.</msg>
-<msg time="2025-12-27T17:55:02.570451" level="INFO">${conteudo} = nome,email,cargo
-Ana Silva,ana@email.com,Analista de RH
-Carlos Souza,carlos@email.com,Desenvolvedor Python
-Maria Oliveira,maria@email.com,Coordenadora de Projetos
-</msg>
-<var>${conteudo}</var>
-<arg>${caminho_csv}</arg>
-<arg>encoding=utf-8</arg>
-<doc>Returns the contents of a specified file.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.569852" elapsed="0.000628"/>
-</kw>
-<kw name="Split To Lines" owner="String">
-<msg time="2025-12-27T17:55:02.570697" level="INFO">4 lines returned.</msg>
-<msg time="2025-12-27T17:55:02.570766" level="INFO">@{linhas} = [ nome,email,cargo | Ana Silva,ana@email.com,Analista de RH | Carlos Souza,carlos@email.com,Desenvolvedor Python | Maria Oliveira,maria@email.com,Coordenadora de Projetos ]</msg>
-<var>@{linhas}</var>
-<arg>${conteudo}</arg>
-<doc>Splits the given string to lines.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.570579" elapsed="0.000211"/>
-</kw>
-<kw name="Split String" owner="String">
-<msg time="2025-12-27T17:55:02.571063" level="INFO">${cabecalho} = ['nome', 'email', 'cargo']</msg>
-<var>${cabecalho}</var>
-<arg>${linhas}[0]</arg>
-<arg>,</arg>
-<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.570869" elapsed="0.000216"/>
-</kw>
-<kw name="Create List" owner="BuiltIn">
-<msg time="2025-12-27T17:55:02.571385" level="INFO">${resultados} = []</msg>
-<var>${resultados}</var>
-<doc>Returns a list containing given items.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.571167" elapsed="0.000238"/>
-</kw>
-<for flavor="IN">
-<iter>
-<kw name="Split String" owner="String">
-<msg time="2025-12-27T17:55:02.571867" level="INFO">${campos} = ['Ana Silva', 'ana@email.com', 'Analista de RH']</msg>
-<var>${campos}</var>
-<arg>${linha}</arg>
-<arg>,</arg>
-<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.571725" elapsed="0.000162"/>
-</kw>
-<kw name="Create Dictionary" owner="BuiltIn">
-<msg time="2025-12-27T17:55:02.572209" level="INFO">${dict} = {}</msg>
-<var>${dict}</var>
-<doc>Creates and returns a dictionary based on the given ``items``.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.571984" elapsed="0.000245"/>
-</kw>
-<kw name="Get Length" owner="BuiltIn">
-<msg time="2025-12-27T17:55:02.572599" level="INFO">Length is 3.</msg>
-<msg time="2025-12-27T17:55:02.572652" level="INFO">${tamanho} = 3</msg>
-<var>${tamanho}</var>
-<arg>${cabecalho}</arg>
-<doc>Returns and logs the length of the given item as an integer.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.572303" elapsed="0.000366"/>
-</kw>
-<for flavor="IN RANGE">
-<iter>
-<kw name="Set Variable" owner="BuiltIn">
-<msg time="2025-12-27T17:55:02.573208" level="INFO">${chave} = nome</msg>
-<var>${chave}</var>
-<arg>${cabecalho}[${i}]</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.572986" elapsed="0.000244"/>
-</kw>
-<kw name="Set Variable" owner="BuiltIn">
-<msg time="2025-12-27T17:55:02.573501" level="INFO">${valor} = Ana Silva</msg>
-<var>${valor}</var>
-<arg>${campos}[${i}]</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.573307" elapsed="0.000213"/>
-</kw>
-<kw name="Set To Dictionary" owner="Collections">
-<arg>${dict}</arg>
-<arg>${chave}</arg>
-<arg>${valor}</arg>
-<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.573598" elapsed="0.000192"/>
-</kw>
-<var name="${i}">0</var>
-<status status="PASS" start="2025-12-27T17:55:02.572866" elapsed="0.000960"/>
-</iter>
-<iter>
-<kw name="Set Variable" owner="BuiltIn">
-<msg time="2025-12-27T17:55:02.574184" level="INFO">${chave} = email</msg>
-<var>${chave}</var>
-<arg>${cabecalho}[${i}]</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.573978" elapsed="0.000228"/>
-</kw>
-<kw name="Set Variable" owner="BuiltIn">
-<msg time="2025-12-27T17:55:02.574469" level="INFO">${valor} = ana@email.com</msg>
-<var>${valor}</var>
-<arg>${campos}[${i}]</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.574279" elapsed="0.000208"/>
-</kw>
-<kw name="Set To Dictionary" owner="Collections">
-<arg>${dict}</arg>
-<arg>${chave}</arg>
-<arg>${valor}</arg>
-<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.574558" elapsed="0.000140"/>
-</kw>
-<var name="${i}">1</var>
-<status status="PASS" start="2025-12-27T17:55:02.573909" elapsed="0.000823"/>
-</iter>
-<iter>
-<kw name="Set Variable" owner="BuiltIn">
-<msg time="2025-12-27T17:55:02.575334" level="INFO">${chave} = cargo</msg>
-<var>${chave}</var>
-<arg>${cabecalho}[${i}]</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.575129" elapsed="0.000225"/>
-</kw>
-<kw name="Set Variable" owner="BuiltIn">
-<msg time="2025-12-27T17:55:02.575652" level="INFO">${valor} = Analista de RH</msg>
-<var>${valor}</var>
-<arg>${campos}[${i}]</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.575427" elapsed="0.000247"/>
-</kw>
-<kw name="Set To Dictionary" owner="Collections">
-<arg>${dict}</arg>
-<arg>${chave}</arg>
-<arg>${valor}</arg>
-<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.575747" elapsed="0.000134"/>
-</kw>
-<var name="${i}">2</var>
-<status status="PASS" start="2025-12-27T17:55:02.574809" elapsed="0.001106"/>
-</iter>
-<var>${i}</var>
-<value>${tamanho}</value>
-<status status="PASS" start="2025-12-27T17:55:02.572720" elapsed="0.003233"/>
-</for>
-<kw name="Append To List" owner="Collections">
-<arg>${resultados}</arg>
-<arg>${dict}</arg>
-<doc>Adds ``values`` to the end of ``list``.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.576036" elapsed="0.000142"/>
-</kw>
-<var name="${linha}">Ana Silva,ana@email.com,Analista de RH</var>
-<status status="PASS" start="2025-12-27T17:55:02.571649" elapsed="0.004561"/>
-</iter>
-<iter>
-<kw name="Split String" owner="String">
-<msg time="2025-12-27T17:55:02.576501" level="INFO">${campos} = ['Carlos Souza', 'carlos@email.com', 'Desenvolvedor Python']</msg>
-<var>${campos}</var>
-<arg>${linha}</arg>
-<arg>,</arg>
-<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.576371" elapsed="0.000149"/>
-</kw>
-<kw name="Create Dictionary" owner="BuiltIn">
-<msg time="2025-12-27T17:55:02.576844" level="INFO">${dict} = {}</msg>
-<var>${dict}</var>
-<doc>Creates and returns a dictionary based on the given ``items``.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.576605" elapsed="0.000259"/>
-</kw>
-<kw name="Get Length" owner="BuiltIn">
-<msg time="2025-12-27T17:55:02.577245" level="INFO">Length is 3.</msg>
-<msg time="2025-12-27T17:55:02.577294" level="INFO">${tamanho} = 3</msg>
-<var>${tamanho}</var>
-<arg>${cabecalho}</arg>
-<doc>Returns and logs the length of the given item as an integer.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.577073" elapsed="0.000238"/>
-</kw>
-<for flavor="IN RANGE">
-<iter>
-<kw name="Set Variable" owner="BuiltIn">
-<msg time="2025-12-27T17:55:02.577705" level="INFO">${chave} = nome</msg>
-<var>${chave}</var>
-<arg>${cabecalho}[${i}]</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.577516" elapsed="0.000208"/>
-</kw>
-<kw name="Set Variable" owner="BuiltIn">
-<msg time="2025-12-27T17:55:02.577985" level="INFO">${valor} = Carlos Souza</msg>
-<var>${valor}</var>
-<arg>${campos}[${i}]</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.577794" elapsed="0.000209"/>
-</kw>
-<kw name="Set To Dictionary" owner="Collections">
-<arg>${dict}</arg>
-<arg>${chave}</arg>
-<arg>${valor}</arg>
-<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.578075" elapsed="0.000136"/>
-</kw>
-<var name="${i}">0</var>
-<status status="PASS" start="2025-12-27T17:55:02.577455" elapsed="0.000789"/>
-</iter>
-<iter>
-<kw name="Set Variable" owner="BuiltIn">
-<msg time="2025-12-27T17:55:02.578560" level="INFO">${chave} = email</msg>
-<var>${chave}</var>
-<arg>${cabecalho}[${i}]</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.578375" elapsed="0.000204"/>
-</kw>
-<kw name="Set Variable" owner="BuiltIn">
-<msg time="2025-12-27T17:55:02.578829" level="INFO">${valor} = carlos@email.com</msg>
-<var>${valor}</var>
-<arg>${campos}[${i}]</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.578649" elapsed="0.000198"/>
-</kw>
-<kw name="Set To Dictionary" owner="Collections">
-<arg>${dict}</arg>
-<arg>${chave}</arg>
-<arg>${valor}</arg>
-<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.578917" elapsed="0.000138"/>
-</kw>
-<var name="${i}">1</var>
-<status status="PASS" start="2025-12-27T17:55:02.578316" elapsed="0.000777"/>
-</iter>
-<iter>
-<kw name="Set Variable" owner="BuiltIn">
-<msg time="2025-12-27T17:55:02.579409" level="INFO">${chave} = cargo</msg>
-<var>${chave}</var>
-<arg>${cabecalho}[${i}]</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.579227" elapsed="0.000201"/>
-</kw>
-<kw name="Set Variable" owner="BuiltIn">
-<msg time="2025-12-27T17:55:02.579673" level="INFO">${valor} = Desenvolvedor Python</msg>
-<var>${valor}</var>
-<arg>${campos}[${i}]</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.579497" elapsed="0.000194"/>
-</kw>
-<kw name="Set To Dictionary" owner="Collections">
-<arg>${dict}</arg>
-<arg>${chave}</arg>
-<arg>${valor}</arg>
-<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.579763" elapsed="0.000129"/>
-</kw>
-<var name="${i}">2</var>
-<status status="PASS" start="2025-12-27T17:55:02.579169" elapsed="0.000756"/>
-</iter>
-<var>${i}</var>
-<value>${tamanho}</value>
-<status status="PASS" start="2025-12-27T17:55:02.577354" elapsed="0.002609"/>
-</for>
-<kw name="Append To List" owner="Collections">
-<arg>${resultados}</arg>
-<arg>${dict}</arg>
-<doc>Adds ``values`` to the end of ``list``.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.580040" elapsed="0.000121"/>
-</kw>
-<var name="${linha}">Carlos Souza,carlos@email.com,Desenvolvedor Python</var>
-<status status="PASS" start="2025-12-27T17:55:02.576311" elapsed="0.003881"/>
-</iter>
-<iter>
-<kw name="Split String" owner="String">
-<msg time="2025-12-27T17:55:02.580472" level="INFO">${campos} = ['Maria Oliveira', 'maria@email.com', 'Coordenadora de Projetos']</msg>
-<var>${campos}</var>
-<arg>${linha}</arg>
-<arg>,</arg>
-<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.580348" elapsed="0.000143"/>
-</kw>
-<kw name="Create Dictionary" owner="BuiltIn">
-<msg time="2025-12-27T17:55:02.580731" level="INFO">${dict} = {}</msg>
-<var>${dict}</var>
-<doc>Creates and returns a dictionary based on the given ``items``.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.580571" elapsed="0.000178"/>
-</kw>
-<kw name="Get Length" owner="BuiltIn">
-<msg time="2025-12-27T17:55:02.580978" level="INFO">Length is 3.</msg>
-<msg time="2025-12-27T17:55:02.581026" level="INFO">${tamanho} = 3</msg>
-<var>${tamanho}</var>
-<arg>${cabecalho}</arg>
-<doc>Returns and logs the length of the given item as an integer.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.580816" elapsed="0.000227"/>
-</kw>
-<for flavor="IN RANGE">
-<iter>
-<kw name="Set Variable" owner="BuiltIn">
-<msg time="2025-12-27T17:55:02.581430" level="INFO">${chave} = nome</msg>
-<var>${chave}</var>
-<arg>${cabecalho}[${i}]</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.581241" elapsed="0.000208"/>
-</kw>
-<kw name="Set Variable" owner="BuiltIn">
-<msg time="2025-12-27T17:55:02.581696" level="INFO">${valor} = Maria Oliveira</msg>
-<var>${valor}</var>
-<arg>${campos}[${i}]</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.581519" elapsed="0.000195"/>
-</kw>
-<kw name="Set To Dictionary" owner="Collections">
-<arg>${dict}</arg>
-<arg>${chave}</arg>
-<arg>${valor}</arg>
-<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.581783" elapsed="0.000130"/>
-</kw>
-<var name="${i}">0</var>
-<status status="PASS" start="2025-12-27T17:55:02.581182" elapsed="0.000773"/>
-</iter>
-<iter>
-<kw name="Set Variable" owner="BuiltIn">
-<msg time="2025-12-27T17:55:02.582269" level="INFO">${chave} = email</msg>
-<var>${chave}</var>
-<arg>${cabecalho}[${i}]</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.582085" elapsed="0.000203"/>
-</kw>
-<kw name="Set Variable" owner="BuiltIn">
-<msg time="2025-12-27T17:55:02.582532" level="INFO">${valor} = maria@email.com</msg>
-<var>${valor}</var>
-<arg>${campos}[${i}]</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.582356" elapsed="0.000194"/>
-</kw>
-<kw name="Set To Dictionary" owner="Collections">
-<arg>${dict}</arg>
-<arg>${chave}</arg>
-<arg>${valor}</arg>
-<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.582621" elapsed="0.000132"/>
-</kw>
-<var name="${i}">1</var>
-<status status="PASS" start="2025-12-27T17:55:02.582025" elapsed="0.000761"/>
-</iter>
-<iter>
-<kw name="Set Variable" owner="BuiltIn">
-<msg time="2025-12-27T17:55:02.583111" level="INFO">${chave} = cargo</msg>
-<var>${chave}</var>
-<arg>${cabecalho}[${i}]</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.582920" elapsed="0.000210"/>
-</kw>
-<kw name="Set Variable" owner="BuiltIn">
-<msg time="2025-12-27T17:55:02.583374" level="INFO">${valor} = Coordenadora de Projetos</msg>
-<var>${valor}</var>
-<arg>${campos}[${i}]</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.583198" elapsed="0.000195"/>
-</kw>
-<kw name="Set To Dictionary" owner="Collections">
-<arg>${dict}</arg>
-<arg>${chave}</arg>
-<arg>${valor}</arg>
-<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.583464" elapsed="0.000168"/>
-</kw>
-<var name="${i}">2</var>
-<status status="PASS" start="2025-12-27T17:55:02.582859" elapsed="0.000807"/>
-</iter>
-<var>${i}</var>
-<value>${tamanho}</value>
-<status status="PASS" start="2025-12-27T17:55:02.581084" elapsed="0.002612"/>
-</for>
-<kw name="Append To List" owner="Collections">
-<arg>${resultados}</arg>
-<arg>${dict}</arg>
-<doc>Adds ``values`` to the end of ``list``.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.583769" elapsed="0.000114"/>
-</kw>
-<var name="${linha}">Maria Oliveira,maria@email.com,Coordenadora de Projetos</var>
-<status status="PASS" start="2025-12-27T17:55:02.580289" elapsed="0.003625"/>
-</iter>
-<var>${linha}</var>
-<value>@{linhas}[1:]</value>
-<status status="PASS" start="2025-12-27T17:55:02.571464" elapsed="0.012487"/>
-</for>
-<return>
-<value>${resultados}</value>
-<status status="PASS" start="2025-12-27T17:55:02.583997" elapsed="0.000044"/>
-</return>
-<msg time="2025-12-27T17:55:02.584149" level="INFO">${candidatos} = [{'nome': 'Ana Silva', 'email': 'ana@email.com', 'cargo': 'Analista de RH'}, {'nome': 'Carlos Souza', 'email': 'carlos@email.com', 'cargo': 'Desenvolvedor Python'}, {'nome': 'Maria Oliveira', 'email':...</msg>
 <var>${candidatos}</var>
 <arg>${CSV_PATH}</arg>
-<status status="PASS" start="2025-12-27T17:55:02.569349" elapsed="0.014820"/>
+<status status="NOT RUN" start="2025-12-27T18:26:38.209115" elapsed="0.000029"/>
 </kw>
 <kw name="Log Many" owner="BuiltIn">
-<msg time="2025-12-27T17:55:02.584436" level="INFO">{'nome': 'Ana Silva', 'email': 'ana@email.com', 'cargo': 'Analista de RH'}</msg>
-<msg time="2025-12-27T17:55:02.584460" level="INFO">{'nome': 'Carlos Souza', 'email': 'carlos@email.com', 'cargo': 'Desenvolvedor Python'}</msg>
-<msg time="2025-12-27T17:55:02.584479" level="INFO">{'nome': 'Maria Oliveira', 'email': 'maria@email.com', 'cargo': 'Coordenadora de Projetos'}</msg>
 <arg>@{candidatos}</arg>
 <doc>Logs the given messages as separate entries using the INFO level.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.584279" elapsed="0.000225"/>
+<status status="NOT RUN" start="2025-12-27T18:26:38.209241" elapsed="0.000021"/>
 </kw>
 <for flavor="IN">
 <iter>
 <kw name="Preencher Formulário">
-<kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-12-27T17:55:02.585329" level="INFO">Typing text 'Ana Silva' into text field 'name=nome'.</msg>
-<arg>name=nome</arg>
-<arg>${nome}</arg>
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-12-27T17:55:02.585021" elapsed="0.984615"/>
-</kw>
-<kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-12-27T17:55:03.570275" level="INFO">Typing text 'ana@email.com' into text field 'name=email'.</msg>
-<arg>name=email</arg>
-<arg>${email}</arg>
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-12-27T17:55:03.569920" elapsed="0.978373"/>
-</kw>
-<kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-12-27T17:55:04.548863" level="INFO">Typing text 'Analista de RH' into text field 'name=cargo'.</msg>
-<arg>name=cargo</arg>
-<arg>${cargo}</arg>
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-12-27T17:55:04.548548" elapsed="0.974918"/>
-</kw>
-<kw name="Click Button" owner="SeleniumLibrary">
-<msg time="2025-12-27T17:55:05.523836" level="INFO">Clicking button 'xpath=//button[@type='submit']'.</msg>
-<arg>xpath=//button[@type='submit']</arg>
-<doc>Clicks the button identified by ``locator``.</doc>
-<status status="PASS" start="2025-12-27T17:55:05.523654" elapsed="1.595774"/>
-</kw>
-<kw name="Wait Until Page Contains" owner="SeleniumLibrary">
-<arg>cadastrado com sucesso</arg>
-<arg>timeout=5s</arg>
-<doc>Waits until ``text`` appears on the current page.</doc>
-<status status="PASS" start="2025-12-27T17:55:07.119684" elapsed="0.313161"/>
-</kw>
 <arg>${cand}[nome]</arg>
 <arg>${cand}[email]</arg>
 <arg>${cand}[cargo]</arg>
-<status status="PASS" start="2025-12-27T17:55:02.584769" elapsed="4.848270"/>
+<status status="NOT RUN" start="2025-12-27T18:26:38.209492" elapsed="0.000022"/>
 </kw>
-<var name="${cand}">{'nome': 'Ana Silva', 'email': 'ana@email.com', 'cargo': 'Analista de RH'}</var>
-<status status="PASS" start="2025-12-27T17:55:02.584659" elapsed="4.848447"/>
-</iter>
-<iter>
-<kw name="Preencher Formulário">
-<kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-12-27T17:55:07.434248" level="INFO">Typing text 'Carlos Souza' into text field 'name=nome'.</msg>
-<arg>name=nome</arg>
-<arg>${nome}</arg>
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-12-27T17:55:07.433990" elapsed="0.972754"/>
-</kw>
-<kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-12-27T17:55:08.407320" level="INFO">Typing text 'carlos@email.com' into text field 'name=email'.</msg>
-<arg>name=email</arg>
-<arg>${email}</arg>
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-12-27T17:55:08.407010" elapsed="0.973651"/>
-</kw>
-<kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-12-27T17:55:09.381243" level="INFO">Typing text 'Desenvolvedor Python' into text field 'name=cargo'.</msg>
-<arg>name=cargo</arg>
-<arg>${cargo}</arg>
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-12-27T17:55:09.380916" elapsed="0.971722"/>
-</kw>
-<kw name="Click Button" owner="SeleniumLibrary">
-<msg time="2025-12-27T17:55:10.353165" level="INFO">Clicking button 'xpath=//button[@type='submit']'.</msg>
-<arg>xpath=//button[@type='submit']</arg>
-<doc>Clicks the button identified by ``locator``.</doc>
-<status status="PASS" start="2025-12-27T17:55:10.352894" elapsed="1.565168"/>
-</kw>
-<kw name="Wait Until Page Contains" owner="SeleniumLibrary">
-<arg>cadastrado com sucesso</arg>
-<arg>timeout=5s</arg>
-<doc>Waits until ``text`` appears on the current page.</doc>
-<status status="PASS" start="2025-12-27T17:55:11.918322" elapsed="0.309287"/>
-</kw>
-<arg>${cand}[nome]</arg>
-<arg>${cand}[email]</arg>
-<arg>${cand}[cargo]</arg>
-<status status="PASS" start="2025-12-27T17:55:07.433504" elapsed="4.794268"/>
-</kw>
-<var name="${cand}">{'nome': 'Carlos Souza', 'email': 'carlos@email.com', 'cargo': 'Desenvolvedor Python'}</var>
-<status status="PASS" start="2025-12-27T17:55:07.433290" elapsed="4.794546"/>
-</iter>
-<iter>
-<kw name="Preencher Formulário">
-<kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-12-27T17:55:12.228999" level="INFO">Typing text 'Maria Oliveira' into text field 'name=nome'.</msg>
-<arg>name=nome</arg>
-<arg>${nome}</arg>
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-12-27T17:55:12.228729" elapsed="0.971942"/>
-</kw>
-<kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-12-27T17:55:13.201250" level="INFO">Typing text 'maria@email.com' into text field 'name=email'.</msg>
-<arg>name=email</arg>
-<arg>${email}</arg>
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-12-27T17:55:13.200927" elapsed="0.970244"/>
-</kw>
-<kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-12-27T17:55:14.171726" level="INFO">Typing text 'Coordenadora de Projetos' into text field 'name=cargo'.</msg>
-<arg>name=cargo</arg>
-<arg>${cargo}</arg>
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-12-27T17:55:14.171418" elapsed="0.954891"/>
-</kw>
-<kw name="Click Button" owner="SeleniumLibrary">
-<msg time="2025-12-27T17:55:15.126823" level="INFO">Clicking button 'xpath=//button[@type='submit']'.</msg>
-<arg>xpath=//button[@type='submit']</arg>
-<doc>Clicks the button identified by ``locator``.</doc>
-<status status="PASS" start="2025-12-27T17:55:15.126574" elapsed="1.579301"/>
-</kw>
-<kw name="Wait Until Page Contains" owner="SeleniumLibrary">
-<arg>cadastrado com sucesso</arg>
-<arg>timeout=5s</arg>
-<doc>Waits until ``text`` appears on the current page.</doc>
-<status status="PASS" start="2025-12-27T17:55:16.706163" elapsed="0.308406"/>
-</kw>
-<arg>${cand}[nome]</arg>
-<arg>${cand}[email]</arg>
-<arg>${cand}[cargo]</arg>
-<status status="PASS" start="2025-12-27T17:55:12.228237" elapsed="4.786539"/>
-</kw>
-<var name="${cand}">{'nome': 'Maria Oliveira', 'email': 'maria@email.com', 'cargo': 'Coordenadora de Projetos'}</var>
-<status status="PASS" start="2025-12-27T17:55:12.228031" elapsed="4.786812"/>
+<var name="${cand}"/>
+<status status="NOT RUN" start="2025-12-27T18:26:38.209387" elapsed="0.000157"/>
 </iter>
 <var>${cand}</var>
 <value>@{candidatos}</value>
-<status status="PASS" start="2025-12-27T17:55:02.584565" elapsed="14.430347"/>
+<status status="NOT RUN" start="2025-12-27T18:26:38.209321" elapsed="0.000254"/>
 </for>
 <kw name="Close Browser" owner="SeleniumLibrary">
 <doc>Closes the current browser.</doc>
-<status status="PASS" start="2025-12-27T17:55:17.015160" elapsed="0.395151"/>
+<status status="NOT RUN" start="2025-12-27T18:26:38.209669" elapsed="0.000019"/>
 </kw>
-<status status="PASS" start="2025-12-27T17:55:02.054935" elapsed="15.355640"/>
+<status status="FAIL" start="2025-12-27T18:26:38.206323" elapsed="0.003471">NoSuchDriverException: Message: Unable to obtain driver for chrome; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors/driver_location
+</status>
 </test>
 <doc>Simula cadastro de candidatos lidos de um CSV</doc>
-<status status="PASS" start="2025-12-27T17:55:01.915413" elapsed="15.495682"/>
+<status status="FAIL" start="2025-12-27T18:26:38.086070" elapsed="0.123986"/>
 </suite>
 <statistics>
 <total>
-<stat pass="1" fail="0" skip="0">All Tests</stat>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
 </total>
 <tag>
 </tag>
 <suite>
-<stat name="Fill Form From Csv" id="s1" pass="1" fail="0" skip="0">Fill Form From Csv</stat>
+<stat name="Fill Form From Csv" id="s1" pass="0" fail="1" skip="0">Fill Form From Csv</stat>
 </suite>
 </statistics>
 <errors>
+<msg time="2025-12-27T18:26:38.207306" level="WARN">exexcutable_path is being deprecated. Please use service to configure the driver's executable_path as per documentation.</msg>
 </errors>
 </robot>
