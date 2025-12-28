@@ -27,4 +27,3 @@ Ler Candidatos do CSV
         Append To List    ${resultados}    ${dict}
     END
     RETURN    ${resultados}
-

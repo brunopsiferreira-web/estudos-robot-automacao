@@ -12,10 +12,7 @@ ${FORM_URL}     http://localhost:5000
 
 *** Test Cases ***
 Cadastrar Candidatos do CSV
-    # ${options}=    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver
-    # Call Method    ${options}    add_argument    --headless
-
-    Open Browser    ${FORM_URL}    Chrome    usr/local/bin/chromedriver
+    Open Browser    ${FORM_URL}    Chrome
     Set Selenium Speed    0.3s
 
     ${candidatos}=    Ler Candidatos do CSV    ${CSV_PATH}
