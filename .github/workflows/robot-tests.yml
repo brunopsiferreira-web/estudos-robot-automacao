@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout do código
+      # 1. Checkout
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -21,31 +21,30 @@ jobs:
         with:
           python-version: "3.11"
 
-      # 3. Instalar dependências
+      # 3. Instalar dependências + webdriver-manager (recomendado)
       - name: Install dependencies
         run: |
           pip install --upgrade pip
           pip install -r requirements.txt
+          pip install webdriver-manager  # gerencia chromedriver automaticamente
 
-      # 4. Instalar Chrome e ChromeDriver (correto!)
-      - name: Setup Chrome
-        uses: browser-actions/setup-chrome@v1
-        with:
-          chrome-version: latest
+      # 4. Instalar xvfb (necessário para rodar Chrome sem GUI)
+      - name: Install xvfb
+        run: sudo apt-get update && sudo apt-get install -y xvfb
 
-      # 5. Iniciar o simulador Flask em background
+      # 5. Iniciar Flask em background
       - name: Start Flask app
         run: |
-          python app/form_simulator.py &
+          xvfb-run -a python app/form_simulator.py &
           sleep 3
         shell: bash
 
-      # 6. Rodar os testes
+      # 6. Rodar testes com xvfb (garante ambiente gráfico virtual)
       - name: Run Robot tests
         run: |
-          robot --outputdir results/ tests/
+          xvfb-run -a robot --outputdir results/ tests/
 
-      # 7. Salvar resultados
+      # 7. Salvar artefatos
       - name: Upload test artifacts
         uses: actions/upload-artifact@v4
         if: always()
